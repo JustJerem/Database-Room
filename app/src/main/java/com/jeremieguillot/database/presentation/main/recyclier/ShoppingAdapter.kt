@@ -6,19 +6,19 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.jeremieguillot.database.R
-import com.jeremieguillot.database.domain.model.CourseItem
+import com.jeremieguillot.database.domain.model.ShoppingItem
 import kotlin.collections.ArrayList
 
-interface CourseAdapterListener {
-    fun onCourseClicked(course: CourseItem)
+interface ShoppingAdapterListener {
+    fun onShoppingItemClicked(item: ShoppingItem)
 }
 
-class CourseAdapter(private val listener: CourseAdapterListener) :
-    RecyclerView.Adapter<CourseAdapter.ViewHolder>() {
+class ShoppingAdapter(private val listener: ShoppingAdapterListener) :
+    RecyclerView.Adapter<ShoppingAdapter.ViewHolder>() {
 
-    private var data: List<CourseItem> = ArrayList()
+    private var data: List<ShoppingItem> = ArrayList()
 
-    fun setData(data: List<CourseItem>) {
+    fun setData(data: List<ShoppingItem>) {
         this.data = data
         notifyDataSetChanged()
     }
@@ -35,10 +35,10 @@ class CourseAdapter(private val listener: CourseAdapterListener) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val course = data[position]
-        holder.tvName.text = course.name
-        holder.tvQuantity.text = course.quantity.toString()
-        holder.itemView.setOnClickListener { listener.onCourseClicked(course) }
+        val item = data[position]
+        holder.tvName.text = item.name
+        holder.tvQuantity.text = item.quantity.toString()
+        holder.itemView.setOnClickListener { listener.onShoppingItemClicked(item) }
     }
 
     override fun getItemCount(): Int {

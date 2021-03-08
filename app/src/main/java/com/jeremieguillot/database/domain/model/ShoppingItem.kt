@@ -5,8 +5,8 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity
-data class CourseItem(
+data class ShoppingItem(
+    @PrimaryKey val uid: String,
     @ColumnInfo(name = "name") val name: String,
-    @ColumnInfo(name = "quantity") val quantity: Int?,
-    @PrimaryKey(autoGenerate = true) val uid: Int = 0
+    @ColumnInfo(name = "quantity") val quantity: Int?
 )

@@ -3,28 +3,26 @@ package com.jeremieguillot.database.presentation.main
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.widget.Button
 import android.widget.EditText
-import android.widget.SeekBar
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.core.widget.doOnTextChanged
 import androidx.recyclerview.widget.RecyclerView
 import com.jeremieguillot.database.R
-import com.jeremieguillot.database.domain.model.CourseItem
-import com.jeremieguillot.database.presentation.main.recyclier.CourseAdapterListener
-import com.jeremieguillot.database.presentation.main.recyclier.CourseAdapter
+import com.jeremieguillot.database.domain.model.ShoppingItem
+import com.jeremieguillot.database.presentation.main.recyclier.ShoppingAdapterListener
+import com.jeremieguillot.database.presentation.main.recyclier.ShoppingAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.InternalCoroutinesApi
 
 @InternalCoroutinesApi
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity(), CourseAdapterListener {
+class MainActivity : AppCompatActivity(), ShoppingAdapterListener {
 
     private val viewModel: MainViewModel by viewModels()
-    private val adapter = CourseAdapter(this)
+    private val adapter = ShoppingAdapter(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,7 +48,7 @@ class MainActivity : AppCompatActivity(), CourseAdapterListener {
     }
 
     private fun populateRecycler() {
-        viewModel.getAllCoursesItems()
+        viewModel.getAllShoppingItems()
         viewModel.items.observe(this, {
             adapter.setData(it)
         })
@@ -70,14 +68,14 @@ class MainActivity : AppCompatActivity(), CourseAdapterListener {
 
         val dialogBuilder = AlertDialog.Builder(context).apply {
             setView(messageBoxView)
-            setPositiveButton(android.R.string.ok) { dialog, which ->
+            setPositiveButton(android.R.string.ok) { dialog, _ ->
                 val name = etName.text.toString()
                 val quantity = etQuantity.text.toString().toInt()
                 viewModel.addItem(name, quantity)
                 //close dialog
                 dialog.dismiss()
             }
-            setNegativeButton(android.R.string.cancel) { dialog, which ->
+            setNegativeButton(android.R.string.cancel) { dialog, _ ->
                 dialog.dismiss()
             }
         }
@@ -85,22 +83,22 @@ class MainActivity : AppCompatActivity(), CourseAdapterListener {
         dialogBuilder.show()
     }
 
-    private fun deleteDialog(context: Context, course: CourseItem) {
+    private fun deleteDialog(context: Context, item: ShoppingItem) {
         AlertDialog.Builder(context).apply {
             setTitle(R.string.delete)
             setMessage(R.string.delete_item)
-            setPositiveButton(android.R.string.ok) { dialog, which ->
-                viewModel.delete(course)
+            setPositiveButton(android.R.string.ok) { dialog, _ ->
+                viewModel.delete(item)
                 dialog.dismiss()
             }
-            setNegativeButton(android.R.string.cancel) { dialog, which ->
+            setNegativeButton(android.R.string.cancel) { dialog, _ ->
                 dialog.dismiss()
             }
             show()
         }
     }
 
-    override fun onCourseClicked(course: CourseItem) {
-        deleteDialog(this, course)
+    override fun onShoppingItemClicked(item: ShoppingItem) {
+        deleteDialog(this, item)
     }
 }

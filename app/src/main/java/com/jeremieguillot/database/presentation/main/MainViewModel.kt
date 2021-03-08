@@ -4,25 +4,26 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.jeremieguillot.database.data.CourseRepository
-import com.jeremieguillot.database.domain.model.CourseItem
+import com.jeremieguillot.database.data.ShoppingRepository
+import com.jeremieguillot.database.domain.model.ShoppingItem
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import java.util.*
 import javax.inject.Inject
 
 
 @InternalCoroutinesApi
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val repository: CourseRepository
+    private val repository: ShoppingRepository
 ) : ViewModel() {
 
-    private val _items: MutableLiveData<List<CourseItem>> = MutableLiveData()
-    val items: LiveData<List<CourseItem>> get() = _items
+    private val _items: MutableLiveData<List<ShoppingItem>> = MutableLiveData()
+    val items: LiveData<List<ShoppingItem>> get() = _items
 
-    fun getAllCoursesItems() {
+    fun getAllShoppingItems() {
         viewModelScope.launch {
             repository.getAllItems().collect {
                 _items.value = it
@@ -31,9 +32,9 @@ class MainViewModel @Inject constructor(
     }
 
     fun addItem(name: String, quantity: Int) {
-        val course = CourseItem(name, quantity)
+        val item = ShoppingItem(UUID.randomUUID().toString(),name, quantity)
         viewModelScope.launch {
-            repository.addItem(course)
+            repository.addItem(item)
         }
     }
 
@@ -44,14 +45,14 @@ class MainViewModel @Inject constructor(
                     _items.value = it
                 }
             } else {
-                getAllCoursesItems()
+                getAllShoppingItems()
             }
         }
     }
 
-    fun delete(courseItem: CourseItem) {
+    fun delete(item: ShoppingItem) {
         viewModelScope.launch {
-            repository.delete(courseItem)
+            repository.delete(item)
         }
     }
 }
