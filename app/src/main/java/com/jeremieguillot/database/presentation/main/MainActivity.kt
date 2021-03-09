@@ -1,19 +1,19 @@
 package com.jeremieguillot.database.presentation.main
 
 import android.content.Context
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.widget.Button
 import android.widget.EditText
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doOnTextChanged
 import androidx.recyclerview.widget.RecyclerView
 import com.jeremieguillot.database.R
 import com.jeremieguillot.database.domain.model.ShoppingItem
-import com.jeremieguillot.database.presentation.main.recyclier.ShoppingAdapterListener
 import com.jeremieguillot.database.presentation.main.recyclier.ShoppingAdapter
+import com.jeremieguillot.database.presentation.main.recyclier.ShoppingAdapterListener
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.InternalCoroutinesApi
 

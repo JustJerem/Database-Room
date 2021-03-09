@@ -7,7 +7,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.jeremieguillot.database.R
 import com.jeremieguillot.database.domain.model.ShoppingItem
-import kotlin.collections.ArrayList
 
 interface ShoppingAdapterListener {
     fun onShoppingItemClicked(item: ShoppingItem)

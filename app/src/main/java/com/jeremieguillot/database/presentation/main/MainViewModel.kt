@@ -4,8 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.jeremieguillot.database.data.ShoppingRepository
+import com.jeremieguillot.database.domain.model.LocalShoppingItem
 import com.jeremieguillot.database.domain.model.ShoppingItem
+import com.jeremieguillot.database.domain.repository.ShoppingRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.flow.collect
@@ -32,7 +33,7 @@ class MainViewModel @Inject constructor(
     }
 
     fun addItem(name: String, quantity: Int) {
-        val item = ShoppingItem(UUID.randomUUID().toString(),name, quantity)
+        val item = LocalShoppingItem(UUID.randomUUID().toString(), name, quantity)
         viewModelScope.launch {
             repository.addItem(item)
         }
