@@ -37,6 +37,7 @@ object DatabaseModule {
         return appDatabase.shoppingItemDao()
     }
 
+    //Uncomment for local usage
 /*    @Singleton
     @Provides
     fun provideLocalRepository(
@@ -45,6 +46,7 @@ object DatabaseModule {
         return LocalShoppingRepository(shoppingItemDao)
     }*/
 
+    //Uncomment for online usage
     @Singleton
     @Provides
     fun provideFirebaseRepository(

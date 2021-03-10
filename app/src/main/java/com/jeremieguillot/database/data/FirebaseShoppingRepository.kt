@@ -28,9 +28,9 @@ class FirebaseShoppingRepository @Inject constructor(
                 shoppingList.clear()
 
                 //add item to the list
-                for (postSnapshot in snapshot.children) {
+                for (child in snapshot.children) {
                     val item: FirebaseShoppingItem? =
-                        postSnapshot.getValue(FirebaseShoppingItem::class.java)
+                        child.getValue(FirebaseShoppingItem::class.java)
                     shoppingList.add(item)
                     //send it back over the callback
                     offer(shoppingList)
@@ -60,9 +60,9 @@ class FirebaseShoppingRepository @Inject constructor(
                 //clear the list if it was used previously
                 shoppingList.clear()
                 //add item to the list
-                for (postSnapshot in snapshot.children) {
+                for (child in snapshot.children) {
                     val item: FirebaseShoppingItem? =
-                        postSnapshot.getValue(FirebaseShoppingItem::class.java)
+                        child.getValue(FirebaseShoppingItem::class.java)
                     shoppingList.add(item)
                     //send it back over the callback
                     offer(shoppingList)
@@ -79,7 +79,7 @@ class FirebaseShoppingRepository @Inject constructor(
     }
 
     override suspend fun addItem(shoppingItem: ShoppingItem) {
-        shoppingItem.uid?.let { refOnlineDatabase.child(it).setValue(shoppingItem) }
+        shoppingItem.uid?.let { uid -> refOnlineDatabase.child(uid).setValue(shoppingItem) }
     }
 
     override suspend fun delete(shoppingItem: ShoppingItem) {
